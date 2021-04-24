@@ -2,7 +2,7 @@
 Jetson Nano / Xavier NX baseboard
 =================================
 
-Copyright (c) 2020 `Antmicro <https://www.antmicro.com>`_
+Copyright (c) 2020-2021 `Antmicro <https://www.antmicro.com>`_
 
 .. image:: Images/jetson-nano-baseboard.png
    :scale: 40%
@@ -10,9 +10,11 @@ Copyright (c) 2020 `Antmicro <https://www.antmicro.com>`_
 Overview
 ========
 
-This repository contains open hardware design files for a baseboard supporting the NVIDIA Jetson Nano SoM as well as the recently released Xavier NX SoM. It's been created by `Antmicro <https://antmicro.com>`_, a custom hardware, software and AI engineering company and a Jetson ecosystem partner of `NVIDIA <https://nvidia.com>`_.
+This repository contains open hardware design files for a baseboard supporting the NVIDIA Jetson Nano and Xavier NX SoMs. It's been created by `Antmicro <https://antmicro.com>`_, a custom hardware, software and AI engineering company and a Jetson ecosystem partner of `NVIDIA <https://nvidia.com>`_.
 The board can be interfaced with MIPI CSI-2 video devices through a unified Flexible Flat Cable (FFC) connector, supporting up to 4 sensors in a 2-lane configuration or 3 sensors in a 4-lane configuration.
 Please refer to the ``Jetson Nano OEM Product Design Guide`` for more details regarding the supported CSI lane mappings.
+
+The baseboard, its custom variants designed by Antmicro per customer's specification, and essential accessories can be purchased from `Capable Robot Components <https://capablerobot.com/products/nx-baseboard/>`_.
 
 Repository structure:
 ---------------------
@@ -24,7 +26,7 @@ The remaining files are stored in the following directories:
 * ``Libraries`` - contains the component libraries
 * ``Documentation`` - contains selected files for device fabrication (schematic in PDF, BoM) generated from the Altium project
 * ``Images`` - contains graphics for this README
-* ``3DModels`` - contains files defining the `mechanical model <3DModels/Jetson_Nano_Baseboard-Rev.1.4.2.stl>`_ of the assembled board
+* ``3DModels`` - contains files defining the `mechanical model <3DModels/Jetson_Nano_Baseboard-Rev.1.4.7.stl>`_ of the assembled board
 
 Key features
 ============
@@ -58,11 +60,20 @@ The board can be powered by a voltage in the 6-36VDC range.
 It is recommended to use a 12V 2A DC supply to power the board.
 The board has an integrated power sequencer that starts the module automatically right after applying power supply.
 
+BSP
+---
+
+The baseboard's IO interfaces are supported in the standard `Linux for Tegra (L4T) BSPs <https://developer.nvidia.com/embedded/linux-tegra>`_ provided by NVIDIA for Jetson Xavier NX / Nano. The BSP should work with the open source Jetson Nano / Xavier NX Baseboard out of the box. However, to use the baseboard with various cameras and other accessories you may need to make modifications. If you plan to use the board with Allied Vision `Alvium <https://www.alliedvision.com/en/products/embedded-vision-solutions/alvium-camera-modules-for-embedded-and-machine-vision-applications.html>`_ image sensors, there is a ``linux-patches`` directory, which contains patch files that add support for the Allied Vision cameras for this baseboard with the Nano NX module.
+The patches are named with the L4T release and can be applied to corresponding branches of the Linux `repository <https://github.com/alliedvision/linux_nvidia_jetson>`_ released by Allied Vision. 
+Antmicro's services involve BSP development so you can hire us to the necessary modifications for you.
+
+You can use the USB OTG interface connector to upload a BSP image to a SoM inserted into the baseboard.
+
 Debug UART connection
 ---------------------
 
 Most of the debug messages are provided through the serial console.
-The board is equipped with an FTDI chip providing the UART interface to the host PC.
+The board includes an FTDI chip providing the UART interface to the host PC.
 Please refer to the schematic sheets for more details.
 The default debug UART channel is accessible through ``/dev/ttyUSB0`` (assuming that there are no other FTDI units connected to your PC).
 The default baudrate for serial debug connection is 115200 baud with an 8-bit transmission, 1 stop bit and with no flow control.
@@ -92,4 +103,4 @@ Please check the `releases <https://github.com/antmicro/jetson-nano-baseboard/re
 License
 =======
 
-`MIT <LICENSE>`_
+`Apache-2.0 <LICENSE>`_
